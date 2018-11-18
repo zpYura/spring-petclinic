@@ -1,5 +1,12 @@
 pipeline {
     agent any
+	environment {
+      VERSION = VersionNumber([
+          versionNumberString: '${Version_Major}.${Version_Minor}.${Version_Patch}.${BUILD_NUMBER}', 
+       worstResultForIncrement: 'SUCCESS',
+		projectStartDate: '2018-11-18'
+      ]);
+    }
 	tools {
         maven 'Maven'
         jdk 'Java 9'
@@ -10,7 +17,6 @@ pipeline {
 				git url: 'https://github.com/zpYura/spring-petclinic.git'
 				bat 'mvn clean package'
 				archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-				VersionNumber projectStartDate: '2018-11-18', versionNumberString: '1.0.${BUILDS_THIS_YEAR}', versionPrefix: '', worstResultForIncrement: 'SUCCESS'
 			}
 			post {
                 always {

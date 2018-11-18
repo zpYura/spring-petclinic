@@ -12,9 +12,12 @@ pipeline {
 				archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
 			}
 			post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
+                always {
+                    junit 'target/surefire-reports/*.xml' 
                 }
+				failure { 
+					emailext attachLog: true, body: '', recipientProviders: [upstreamDevelopers()], subject: 'Jenkins Failed Build'
+				}
             }
 		}
 		stage('SonarQube analysis') {

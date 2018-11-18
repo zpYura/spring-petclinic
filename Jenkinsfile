@@ -1,12 +1,5 @@
 pipeline {
     agent any
-	environment {
-      VERSION = VersionNumber([
-          versionNumberString: '${Version_Major}.${Version_Minor}.${Version_Patch}.${BUILD_NUMBER}', 
-       worstResultForIncrement: 'SUCCESS',
-		projectStartDate: '2018-11-18'
-      ]);
-    }
 	tools {
         maven 'Maven'
         jdk 'Java 9'
